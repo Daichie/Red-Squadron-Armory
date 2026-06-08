@@ -206,20 +206,8 @@ function renderSidebar(activeSlug) {
   nav.innerHTML = `
     <a class="${activeSlug === 'dashboard' ? 'active' : ''}" href="dashboard.html">Dashboard</a>
     ${RS_ARMORY.map(unit => `<a class="${activeSlug === unit.slug ? 'active' : ''}" href="armory.html?unit=${unit.slug}">${unit.shortName || unit.name}</a>`).join('')}
+    ${rsUserCanSeeAdminLink() ? '<a href="admin.html">Admin Panel</a>' : ''}
   `;
-
-  const addAdminLink = () => {
-    if (nav.querySelector('a[href="admin.html"]')) return;
-    nav.insertAdjacentHTML('beforeend', `<a class="${activeSlug === 'admin' ? 'active' : ''}" href="admin.html">Admin Panel</a>`);
-  };
-
-  if (rsUserCanSeeAdminLink()) addAdminLink();
-  else {
-    rsUserHasAdminAccess()
-      .then(isAdmin => { if (isAdmin) addAdminLink(); })
-      .catch(() => {});
-  }
-
   const signOut = document.getElementById('signOutBtn');
   if (signOut) {
     signOut.addEventListener('click', rsSignOut);

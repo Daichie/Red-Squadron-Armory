@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (page === "admin") {
       await requirePreviewSession();
-      renderSidebar("admin");
+      renderSidebar("dashboard");
 
       const isAdmin = await rsUserHasAdminAccess();
       if (!isAdmin) {
