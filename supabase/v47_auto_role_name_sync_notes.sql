@@ -1,0 +1,12 @@
+-- Red Squadron Armory V47 Auto Editor Role Sync Notes
+-- No schema change required.
+-- This patch updates supabase/functions/sync-discord-roles/index.ts.
+-- Redeploy the Edge Function after uploading V47:
+--   cd rs_armory_final
+--   npx supabase functions deploy sync-discord-roles
+--
+-- The Edge Function now grants editor access by either:
+-- 1) Discord role ID secrets: ROLE_ADMIN, ROLE_COMMAND, ROLE_S4_RD
+-- 2) Discord role names: Admin/Administrator, Command, S4 - Research and Development
+--
+-- Staff must log out and log in again after deployment to populate public.user_access.

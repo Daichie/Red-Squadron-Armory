@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing In | Red Squadron Armory</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="login-screen">
+  <div class="login-dim"></div>
+
+  <main class="login-center">
+    <img src="assets/logo.png" alt="Red Squadron logo" class="login-logo" />
+    <p class="login-kicker">Discord Access</p>
+    <h1>Verifying<br>Access</h1>
+    <p class="access-note" id="callbackStatus">Processing Discord login...</p>
+    <a class="topbar-btn callback-return" href="login.html">Return to Login</a>
+  </main>
+
+  <script>
+    const CALLBACK_VERSION = "V35_STANDALONE_CALLBACK";
+
+    function setStatus(message) {
+      const el = document.getElementById("callbackStatus");
+      if (el) el.textContent = message;
+    }
+
+    function decodeJwtPayload(token) {
+      try {
+        const payload = token.split(".")[1];
+        if (!payload) return null;
+        const normalized = payload.replace(/-/g, "+").replace(/_/g, "/");
+        const padded = normalized.padEnd(normalized.length + (4 - normalized.length % 4) % 4, "=");
+        return JSON.parse(atob(padded));
+      } catch (error) {
+        console.warn("JWT decode failed:", error);
+        return null;
+      }
+    }
+
+    function forceContinueFromHash() {
+      const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const accessToken = hash.get("access_token");
+      const expiresIn = hash.get("expires_in");
+      const expiresAt = hash.get("expires_at");
+
+      if (!accessToken) return false;
+
+      let finalExpiresAt = 0;
+      if (expiresAt) {
+        finalExpiresAt = Number(expiresAt) * 1000;
+      } else if (expiresIn) {
+        finalExpiresAt = Date.now() + (Number(expiresIn) * 1000);
+      }
+
+      localStorage.setItem("rsArmorySupabaseAccessToken", accessToken);
+      if (finalExpiresAt) {
+        localStorage.setItem("rsArmorySupabaseAccessTokenExpiresAt", String(finalExpiresAt));
+      }
+
+      const payload = decodeJwtPayload(accessToken);
+      if (payload && payload.sub) {
+        const user = {
+          id: payload.sub,
+          email: payload.email || "discord@redsquadron.local",
+          user_metadata: payload.user_metadata || payload.app_metadata || {},
+          identities: []
+        };
+        localStorage.setItem("rsArmorySupabaseUser", JSON.stringify(user));
+      }
+
+      localStorage.removeItem("rsArmoryDiscordAuth");
+      localStorage.removeItem("rsArmoryDiscordLocalToken");
+      localStorage.removeItem("rsArmoryAccessKeys");
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+      window.location.replace("dashboard.html");
+      return true;
+    }
+
+    setStatus("Processing Discord login... (" + CALLBACK_VERSION + ")");
+
+    if (!forceContinueFromHash()) {
+      setStatus("No access token received. Please return to login and try again. (" + CALLBACK_VERSION + ")");
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
