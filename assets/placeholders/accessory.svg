@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#16070a"/><stop offset="1" stop-color="#0c0f12"/></linearGradient><pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="20" height="40" fill="rgba(207,27,46,.12)"/></pattern></defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <rect width="1200" height="800" fill="url(#p)" opacity=".8"/>
+  <rect x="50" y="50" width="1100" height="700" rx="28" fill="none" stroke="#cf1b2e" stroke-opacity=".45" stroke-width="3"/>
+  <path d="M600 165 L720 355 L625 355 L625 605 L575 605 L575 355 L480 355 Z" fill="#cf1b2e" opacity=".22"/>
+  <text x="600" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="800" fill="#f6f3ef" letter-spacing="8">ACCESSORY</text><text x="600" y="456" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="800" fill="#f6f3ef" letter-spacing="8">IMAGE</text>
+  <text x="600" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#d7b955" letter-spacing="6">RED SQUADRON ARMORY PLACEHOLDER</text>
+</svg>

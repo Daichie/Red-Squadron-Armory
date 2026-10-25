@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing In | Red Squadron Armory</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="shortcut icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="login-page" data-page="callback">
+  <main class="login-screen modern-entry">
+    <div class="login-dim"></div>
+    <section class="login-center" aria-label="Discord callback panel">
+      <img class="login-logo" src="assets/logo.png" alt="Red Squadron logo" />
+      <p class="login-kicker">Discord Access</p>
+      <h1>VERIFYING ACCESS</h1>
+      <p class="access-note" id="callbackStatus">Verifying Discord access...</p>
+      <a class="topbar-btn callback-return" href="login.html">Return to Login</a>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/page-init.js"></script>
+</body>
+</html>
